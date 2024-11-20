@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include "vector.h"
 
 void swap(int *i, int *j)
@@ -160,3 +161,40 @@ void QuickSort(int n, int** vector)
   Qsort(n, vector, 0, n - 1);
 }
 
+int FirstNorm(int n, int** vector)
+{
+  int i;
+  int x = 0;
+  for (i = 0; i < n; ++i)
+    x += abs((*vector)[i]);
+  return x;
+}
+
+int InfNorm(int n, int** vector)
+{
+  int i;
+  int x = 0;
+  for (i = 0; i < n; ++i)
+    if (abs((*vector)[i]) > x)
+      x = abs((*vector)[i]);
+  return x;
+}
+
+double NthNorm(int n, int** vector, int k)
+{
+  int i;
+  double x = 0;
+  for(i = 0; i < n; ++i)
+    x += pow(abs((*vector)[i]), k);
+  return pow(x, 1.0 / k);
+}
+
+void Normalize(int n, int** vector, double** vectorResult)
+{
+  int i;
+  double len = NthNorm(n, vector, 2);
+  for (i = 0; i < n; ++i)
+  {
+    (*vectorResult)[i] = (*vector)[i] / len;
+  }
+}

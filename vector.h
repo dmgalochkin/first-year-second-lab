@@ -23,5 +23,12 @@ void MergeSort(int n, int** vector);
 
 void QuickSort(int n, int** vector);
 
+int FirstNorm(int n, int** vector);
+
+int InfNorm(int n, int** vector);
+
+double NthNorm(int n, int** vector, int k);
+
+void Normalize(int n, int** vector, double** vectorResult);
 
 #endif //LAB2_VECTOR_H
