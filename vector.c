@@ -10,6 +10,36 @@ void swap(int *i, int *j)
   (*j) = t;
 }
 
+void CreateVectorFromFile(int* n, int** vector, char* fileName)
+{
+  int i;
+  FILE* file = fopen(fileName, "r");
+  fscanf(file, "%d", n);
+
+  (*vector) = (int*) malloc(*n * sizeof(int));
+
+  for (i = 0; i < *n; ++i)
+  {
+    fscanf(file, "%d", &((*vector)[i]));
+  }
+
+  fclose(file);
+}
+
+void WriteVectorToFile(int n, int** vector, char* fileName)
+{
+  int i;
+  FILE* file = fopen(fileName, "w");
+  fprintf(file, "%d\n", n);
+  for (i = 0; i < n; ++i)
+  {
+    fprintf(file, "%d ", (*vector)[i]);
+  }
+  fprintf(file, "\n");
+  free((*vector));
+  fclose(file);
+}
+
 void CreateVector(int n, int** vector)
 {
   (*vector) = (int*) malloc(n * sizeof(int));
@@ -88,6 +118,7 @@ void InsertionSort(int n, int** vector)
 
 void Merge(int l, int r, int mid, int n, int** vector, int** auxVector)
 {
+  /*
   int i;
   int p = l;
   int pl = l;
@@ -103,6 +134,8 @@ void Merge(int l, int r, int mid, int n, int** vector, int** auxVector)
   {
     (*vector)[i] = (*auxVector)[i];
   }
+   */
+
 }
 
 void MergeRecursive(int l, int r, int n, int** vector, int** auxVector)
@@ -120,7 +153,11 @@ void MergeRecursive(int l, int r, int n, int** vector, int** auxVector)
 
 void MergeSort(int n, int** vector)
 {
+  int i;
   int* auxVector = (int*) malloc(n * sizeof(int));
+
+  for (i = 0; i < n; ++i)
+    auxVector[i] = 0;
 
   MergeRecursive(0, n, n, vector, &auxVector);
 

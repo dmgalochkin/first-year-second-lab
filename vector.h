@@ -31,4 +31,8 @@ double NthNorm(int n, int** vector, int k);
 
 void Normalize(int n, int** vector, double** vectorResult);
 
+void CreateVectorFromFile(int* n, int** vector, char* fileName);
+
+void WriteVectorToFile(int n, int** vector, char* fileName);
+
 #endif //LAB2_VECTOR_H
