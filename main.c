@@ -26,6 +26,8 @@ int main(int argc, char* argv[])
     if (strcmp(sortName, "merge") == 0)
       MergeSort(n, &vector);
 
+    // Test commit
+
     WriteVectorToFile(n, &vector, outputName);
     return 0;
   }

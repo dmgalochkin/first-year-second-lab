@@ -118,35 +118,34 @@ void InsertionSort(int n, int** vector)
 
 void Merge(int l, int r, int mid, int n, int** vector, int** auxVector)
 {
-  /*
+
   int i;
   int p = l;
   int pl = l;
-  int pr = mid;
-  for (pl, pr; pl < mid || pr < r;) {
-    if (pr == r || (*vector)[pl] < (*vector)[pr])
+  int pr = mid + 1;
+  for (pl, pr; pl <= mid || pr <= r;) {
+    if (pr == r + 1 || (*vector)[pl] < (*vector)[pr])
       (*auxVector)[p++] = (*vector)[pl++];
     else
       (*auxVector)[p++] = (*vector)[pr++];
   }
 
-  for (i = l; i < r; ++i)
+  for (i = l; i <= r; ++i)
   {
     (*vector)[i] = (*auxVector)[i];
   }
-   */
 
 }
 
 void MergeRecursive(int l, int r, int n, int** vector, int** auxVector)
 {
   int mid;
-  if (r - l == 1)
+  if (r == l)
     return;
 
-  mid = (l + r) >> 1;
+  mid = (l + r) / 2;
   MergeRecursive(l, mid, n, vector, auxVector);
-  MergeRecursive(mid, r, n, vector, auxVector);
+  MergeRecursive(mid + 1, r, n, vector, auxVector);
 
   Merge(l, r, mid, n, vector, auxVector);
 }
@@ -159,7 +158,7 @@ void MergeSort(int n, int** vector)
   for (i = 0; i < n; ++i)
     auxVector[i] = 0;
 
-  MergeRecursive(0, n, n, vector, &auxVector);
+  MergeRecursive(0, n - 1, n, vector, &auxVector);
 
   free(auxVector);
 }
