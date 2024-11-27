@@ -16,22 +16,38 @@ int main(int argc, char* argv[])
     CreateVectorFromFile(&n, &vector, inputName);
 
     if (strcmp(sortName, "bubble") == 0)
-      BubbleSort(n, &vector);
+      BubbleSort(n, vector);
     if (strcmp(sortName, "selection") == 0)
-      SelectionSort(n, &vector);
+      SelectionSort(n, vector);
     if (strcmp(sortName, "insertion") == 0)
-      InsertionSort(n, &vector);
+      InsertionSort(n, vector);
     if (strcmp(sortName, "quick") == 0)
-      QuickSort(n, &vector);
+      QuickSort(n, vector);
     if (strcmp(sortName, "merge") == 0)
-      MergeSort(n, &vector);
+      MergeSort(n, vector);
 
-    // Test commit
-
-    WriteVectorToFile(n, &vector, outputName);
+    WriteVectorToFile(n, vector, outputName);
     return 0;
   }
 
+  int n;
+  int* vector;
+
+  while (1)
+  {
+    printf("Current vector:\n");
+    if (vector == 0)
+    {
+      printf("Empty\n");
+    }
+    else
+    {
+      PrintVector(n, vector);
+    }
+
+    printf("1 - Create Vector Random\n");
+    printf("2 - Create Vector Random\n");
+  }
 
   return 0;
 }
