@@ -4,6 +4,40 @@
 #include <string.h>
 #include "vector.h"
 
+
+void ClearScreen()
+{
+  /*
+  int i;
+  for (i = 0; i < 50; ++i)
+  {
+    printf("\n");
+  }
+   */
+  system("cls");
+}
+
+void ReadString(char** s)
+{
+  int i;
+  char* temp = (char*) calloc(30, sizeof(char));
+  char c = 0;
+  int p = 0;
+  while (c != '\n')
+  {
+    scanf("%c", &c);
+    temp[p++] = c;
+  }
+
+  (*s) = (char*) calloc(p + 1, sizeof(char));
+
+  for (i = 0; i <= p; ++i)
+  {
+    (*s)[i] = temp[i];
+  }
+  free(temp);
+}
+
 int main(int argc, char* argv[])
 {
   if (argc == 4) {
@@ -30,13 +64,16 @@ int main(int argc, char* argv[])
     return 0;
   }
 
-  int n;
+  int n = 0;
   int* vector;
+
+  char* f;
 
   while (1)
   {
+    ClearScreen();
     printf("Current vector:\n");
-    if (vector == 0)
+    if (n == 0)
     {
       printf("Empty\n");
     }
@@ -45,8 +82,62 @@ int main(int argc, char* argv[])
       PrintVector(n, vector);
     }
 
-    printf("1 - Create Vector Random\n");
-    printf("2 - Create Vector Random\n");
+    printf("1 - Create vector randomly\n");
+    printf("2 - Create vector from keyboard\n");
+    printf("3 - Create vector from file\n");
+    printf("4 - Write vector to file\n");
+    printf("5 - Sort current vector\n");
+    printf("6 - Free current vector\n");
+    printf("7 - Exit\n");
+
+    int t;
+    scanf("%d", &t);
+
+    if (t == 1)
+    {
+      ClearScreen();
+      printf("n = ");
+      scanf("%d", &n);
+      CreateVector(n, &vector);
+      int min, max;
+      printf("min = ");
+      scanf("%d", &min);
+      printf("max = ");
+      scanf("%d", &max);
+      FillVectorRandom(n, vector, min, max);
+    }
+    else if (t == 2)
+    {
+      scanf("%d", &n);
+      CreateVector(n, &vector);
+      FillVectorKeyboard(n, vector);
+    }
+    else if (t == 3)
+    {
+      char* fName;
+      ReadString(&fName);
+      CreateVectorFromFile(&n, &vector, fName);
+    }
+    else if (t == 4)
+    {
+      char* fName;
+      ReadString(&fName);
+      WriteVectorToFile(n, vector, fName);
+    }
+    else if (t == 5)
+    {
+
+    }
+    else if (t == 6)
+    {
+      n = 0;
+      free(vector);
+    }
+    else if (t == 7)
+    {
+      break;
+    }
+    system("pause");
   }
 
   return 0;
