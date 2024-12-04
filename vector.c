@@ -10,6 +10,12 @@ void swap(int *i, int *j)
   (*j) = t;
 }
 
+void FreeVector(int* n, int* vector)
+{
+  *n = 0;
+  free(vector);
+}
+
 void CreateVectorFromFile(int* n, int** vector, char* fileName)
 {
   int i;
@@ -36,7 +42,6 @@ void WriteVectorToFile(int n, int* vector, char* fileName)
     fprintf(file, "%d ", vector[i]);
   }
   fprintf(file, "\n");
-  free(vector);
   fclose(file);
 }
 
@@ -45,34 +50,26 @@ void CreateVector(int n, int** vector)
   (*vector) = (int*) malloc(n * sizeof(int));
 }
 
-int FillVectorRandom(int n, int* vector, int min, int max)
+void FillVectorRandom(int n, int* vector, int min, int max)
 {
   int i;
-  if (vector == 0 || min > max)
-    return 1;
 
   for (i = 0; i < n; ++i)
   {
-    vector[i] = min + rand() % (min - max + 1);
+    vector[i] = min + rand() % (max - min + 1);
   }
-
-  return 0;
 }
 
-int FillVectorKeyboard(int n, int* vector)
+void FillVectorKeyboard(int n, int* vector)
 {
   int i;
-  if (vector == 0)
-    return 1;
 
-  printf("Enter values of vector: ");
+  printf("Enter values of vector:\n");
   for (i = 0; i < n; ++i)
   {
     scanf("%d", &(vector[i]));
   }
   printf("\n");
-
-  return 0;
 }
 
 void PrintVector(int n, int* vector)
@@ -123,7 +120,7 @@ void Merge(int l, int r, int mid, int n, int* vector, int* auxVector)
   int pl = l;
   int pr = mid;
   for (pl, pr; pl < mid || pr < r;) {
-    if (pr == r || vector[pl] < vector[pr])
+    if (pl < mid && (pr == r || vector[pl] < vector[pr]))
       auxVector[p++] = vector[pl++];
     else
       auxVector[p++] = vector[pr++];
@@ -222,12 +219,13 @@ double NthNorm(int n, int* vector, int k)
   return pow(x, 1.0 / k);
 }
 
-void Normalize(int n, int* vector, double* vectorResult)
+void Normalize(int n, int* vector, double** vectorResult)
 {
+  (*vectorResult) = (double*) malloc(n * sizeof(double));
   int i;
   double len = NthNorm(n, vector, 2);
   for (i = 0; i < n; ++i)
   {
-    vectorResult[i] = vector[i] / len;
+    (*vectorResult)[i] = vector[i] / len;
   }
 }

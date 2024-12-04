@@ -4,7 +4,6 @@
 #include <string.h>
 #include "vector.h"
 
-
 void ClearScreen()
 {
   /*
@@ -13,29 +12,31 @@ void ClearScreen()
   {
     printf("\n");
   }
-   */
+  */
   system("cls");
+}
+
+void Pause()
+{
+  system("pause");
 }
 
 void ReadString(char** s)
 {
   int i;
-  char* temp = (char*) calloc(30, sizeof(char));
-  char c = 0;
-  int p = 0;
-  while (c != '\n')
-  {
-    scanf("%c", &c);
-    temp[p++] = c;
-  }
+  int len;
+  char buf[256];
+  scanf("%s", buf);
 
-  (*s) = (char*) calloc(p + 1, sizeof(char));
+  len = strlen(buf);
 
-  for (i = 0; i <= p; ++i)
+  (*s) = (char*) calloc(len + 1, sizeof(char));
+
+  for (i = 0; i < len; ++i)
   {
-    (*s)[i] = temp[i];
+    (*s)[i] = buf[i];
   }
-  free(temp);
+  (*s)[len] = 0;
 }
 
 int main(int argc, char* argv[])
@@ -64,80 +65,153 @@ int main(int argc, char* argv[])
     return 0;
   }
 
+  int i;
   int n = 0;
-  int* vector;
-
-  char* f;
+  int* vector = 0;
+  int t;
+  int v;
+  int k;
+  clock_t start;
+  clock_t end;
 
   while (1)
   {
     ClearScreen();
-    printf("Current vector:\n");
-    if (n == 0)
-    {
-      printf("Empty\n");
-    }
-    else
-    {
-      PrintVector(n, vector);
-    }
 
     printf("1 - Create vector randomly\n");
     printf("2 - Create vector from keyboard\n");
     printf("3 - Create vector from file\n");
     printf("4 - Write vector to file\n");
-    printf("5 - Sort current vector\n");
-    printf("6 - Free current vector\n");
-    printf("7 - Exit\n");
+    printf("5 - Sort vector\n");
+    printf("6 - Get norm of vector\n");
+    printf("7 - Normalize vector\n");
+    printf("8 - Free vector\n");
+    printf("9 - Print vector\n");
+    printf("10 - Exit\n");
 
-    int t;
     scanf("%d", &t);
 
     if (t == 1)
     {
       ClearScreen();
-      printf("n = ");
+      printf("Enter value n:\n");
       scanf("%d", &n);
       CreateVector(n, &vector);
       int min, max;
-      printf("min = ");
+      printf("Enter value min:\n");
       scanf("%d", &min);
-      printf("max = ");
+      printf("Enter value max:\n");
       scanf("%d", &max);
       FillVectorRandom(n, vector, min, max);
     }
     else if (t == 2)
     {
+      ClearScreen();
+      printf("Enter value n:\n");
       scanf("%d", &n);
       CreateVector(n, &vector);
       FillVectorKeyboard(n, vector);
     }
     else if (t == 3)
     {
+      ClearScreen();
       char* fName;
+      printf("Enter filename:\n");
       ReadString(&fName);
       CreateVectorFromFile(&n, &vector, fName);
     }
     else if (t == 4)
     {
+      ClearScreen();
       char* fName;
+      printf("Enter filename:\n");
       ReadString(&fName);
       WriteVectorToFile(n, vector, fName);
     }
     else if (t == 5)
     {
-
+      ClearScreen();
+      printf("1 - Bubble sort\n");
+      printf("2 - Selection sort\n");
+      printf("3 - Insertion sort\n");
+      printf("4 - Merge sort\n");
+      printf("5 - Quick sort\n");
+      printf("6 - Shell sort\n");
+      printf("7 - Count sort\n");
+      scanf("%d", &v);
+      start = clock();
+      if (v == 1)
+        BubbleSort(n, vector);
+      else if (v == 2)
+        SelectionSort(n, vector);
+      else if (v == 3)
+        InsertionSort(n, vector);
+      else if (v == 4)
+        MergeSort(n, vector);
+      else if (v == 5)
+        QuickSort(n, vector);
+      else if (v == 6)
+        SelectionSort(n, vector);
+      else if (v == 7)
+        SelectionSort(n, vector);
+      end = clock();
+      printf("Execution time %.9lfs\n", (double) (end - start) / CLOCKS_PER_SEC);
+      Pause();
     }
     else if (t == 6)
     {
-      n = 0;
-      free(vector);
+      ClearScreen();
+      printf("1 - First norm\n");
+      printf("2 - Second norm\n");
+      printf("3 - N-th norm\n");
+      printf("4 - Infinity norm\n");
+      printf("5 - K-th norm\n");
+
+      scanf("%d", &v);
+
+      if (v == 1)
+        printf("%d\n", FirstNorm(n, vector));
+      else if (v == 2)
+        printf("%lf\n", NthNorm(n, vector, 2));
+      else if (v == 3)
+        printf("%lf\n", NthNorm(n, vector, n));
+      else if (v == 4)
+        printf("%d\n", InfNorm(n, vector));
+      else if (v == 5)
+      {
+        scanf("%d", &k);
+        printf("%lf\n", NthNorm(n, vector, k));
+      }
+      Pause();
     }
     else if (t == 7)
     {
+      ClearScreen();
+      double* normalizedVector;
+      Normalize(n, vector, &normalizedVector);
+      printf("Values of normalized vector:\n");
+      for (i = 0; i < n; ++i)
+      {
+        printf("%lf ", normalizedVector[i]);
+      }
+      printf("\n");
+      free(normalizedVector);
+      Pause();
+    }
+    else if (t == 8)
+    {
+      FreeVector(&n, vector);
+    }
+    else if (t == 9)
+    {
+      ClearScreen();
+      PrintVector(n, vector);
+      Pause();
+    }
+    else if (t == 10)
+    {
       break;
     }
-    system("pause");
   }
 
   return 0;
