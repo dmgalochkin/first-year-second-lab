@@ -191,6 +191,37 @@ void QuickSort(int n, int* vector)
   Qsort(n, vector, 0, n - 1);
 }
 
+void CountSort(int n, int* vector)
+{
+  int i;
+  int p = 0;
+  int min = 2e9;
+  int max = -2e9;
+  for (i = 0; i < n; ++i)
+  {
+    if (vector[i] < min)
+      min = vector[i];
+    if (vector[i] > max)
+      max = vector[i];
+  }
+
+  int* auxVector = (int*) malloc((max - min + 1) * sizeof(int));
+  for (i = 0; i <= max - min; ++i)
+    auxVector[i] = 0;
+  for (i = 0; i < n; ++i)
+    ++auxVector[vector[i] - min];
+
+  for (i = 0; i <= max - min; ++i)
+  {
+    while (auxVector[i]--)
+    {
+      vector[p++] = min + i;
+    }
+  }
+
+  free(auxVector);
+}
+
 int FirstNorm(int n, int* vector)
 {
   int i;

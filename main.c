@@ -13,12 +13,12 @@ void ClearScreen()
     printf("\n");
   }
   */
-  system("cls");
+  //system("cls");
 }
 
 void Pause()
 {
-  system("pause");
+  //system("pause");
 }
 
 void ReadString(char** s)
@@ -153,7 +153,7 @@ int main(int argc, char* argv[])
       else if (v == 6)
         SelectionSort(n, vector);
       else if (v == 7)
-        SelectionSort(n, vector);
+        CountSort(n, vector);
       end = clock();
       printf("Execution time %.9lfs\n", (double) (end - start) / CLOCKS_PER_SEC);
       Pause();
