@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
       else if (v == 5)
         QuickSort(n, vector);
       else if (v == 6)
-        SelectionSort(n, vector);
+        ShellSort(n, vector);
       else if (v == 7)
         CountSort(n, vector);
       end = clock();

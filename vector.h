@@ -25,6 +25,8 @@ void MergeSort(int n, int* vector);
 
 void QuickSort(int n, int* vector);
 
+void ShellSort(int n, int* vector);
+
 void CountSort(int n, int* vector);
 
 int FirstNorm(int n, int* vector);

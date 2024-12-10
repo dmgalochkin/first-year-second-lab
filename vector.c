@@ -191,6 +191,23 @@ void QuickSort(int n, int* vector)
   Qsort(n, vector, 0, n - 1);
 }
 
+void ShellSort(int n, int* vector)
+{
+  int i;
+  int j;
+  int s;
+  for (s = n / 2; s > 0; s /= 2)
+  {
+    for (i = s; i < n; ++i)
+    {
+      for (j = i - s; j >= 0 && vector[j] > vector[j + s]; j -= s)
+      {
+        swap(&(vector[i]), &(vector[j]));
+      }
+    }
+  }
+}
+
 void CountSort(int n, int* vector)
 {
   int i;
