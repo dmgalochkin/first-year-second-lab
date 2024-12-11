@@ -41,30 +41,6 @@ void ReadString(char** s)
 
 int main(int argc, char* argv[])
 {
-  if (argc == 4) {
-    int n;
-    int* vector;
-    char* inputName = argv[1];
-    char* outputName = argv[2];
-    char* sortName = argv[3];
-
-    CreateVectorFromFile(&n, &vector, inputName);
-
-    if (strcmp(sortName, "bubble") == 0)
-      BubbleSort(n, vector);
-    if (strcmp(sortName, "selection") == 0)
-      SelectionSort(n, vector);
-    if (strcmp(sortName, "insertion") == 0)
-      InsertionSort(n, vector);
-    if (strcmp(sortName, "quick") == 0)
-      QuickSort(n, vector);
-    if (strcmp(sortName, "merge") == 0)
-      MergeSort(n, vector);
-
-    WriteVectorToFile(n, vector, outputName);
-    return 0;
-  }
-
   int i;
   int n = 0;
   int* vector = 0;
@@ -73,6 +49,38 @@ int main(int argc, char* argv[])
   int k;
   clock_t start;
   clock_t end;
+
+  char* inputName;
+  char* outputName;
+  char* sortName;
+  double* normalizedVector;
+
+
+  if (argc == 4) {
+    inputName = argv[1];
+    outputName = argv[2];
+    sortName = argv[3];
+
+    CreateVectorFromFile(&n, &vector, inputName);
+
+    if (strcmp(sortName, "bubble") == 0)
+      BubbleSort(n, vector);
+    else if (strcmp(sortName, "selection") == 0)
+      SelectionSort(n, vector);
+    else if (strcmp(sortName, "insertion") == 0)
+      InsertionSort(n, vector);
+    else if (strcmp(sortName, "quick") == 0)
+      QuickSort(n, vector);
+    else if (strcmp(sortName, "merge") == 0)
+      MergeSort(n, vector);
+    else if (strcmp(sortName, "shell") == 0)
+      ShellSort(n, vector);
+    else if (strcmp(sortName, "count") == 0)
+      CountSort(n, vector);
+
+    WriteVectorToFile(n, vector, outputName);
+    return 0;
+  }
 
   while (1)
   {
@@ -88,7 +96,6 @@ int main(int argc, char* argv[])
     printf("8 - Free vector\n");
     printf("9 - Print vector\n");
     printf("10 - Exit\n");
-
     scanf("%d", &t);
 
     if (t == 1)
@@ -187,7 +194,6 @@ int main(int argc, char* argv[])
     else if (t == 7)
     {
       ClearScreen();
-      double* normalizedVector;
       Normalize(n, vector, &normalizedVector);
       printf("Values of normalized vector:\n");
       for (i = 0; i < n; ++i)
