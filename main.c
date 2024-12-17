@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
     sortName = argv[3];
 
     CreateVectorFromFile(&n, &vector, inputName);
-
+    start = clock();
     if (strcmp(sortName, "bubble") == 0)
       BubbleSort(n, vector);
     else if (strcmp(sortName, "selection") == 0)
@@ -77,7 +77,8 @@ int main(int argc, char* argv[])
       ShellSort(n, vector);
     else if (strcmp(sortName, "count") == 0)
       CountSort(n, vector);
-
+    end = clock();
+    printf("%.4lfs\n", (double) (end - start) / CLOCKS_PER_SEC);
     WriteVectorToFile(n, vector, outputName);
     return 0;
   }
@@ -162,7 +163,7 @@ int main(int argc, char* argv[])
       else if (v == 7)
         CountSort(n, vector);
       end = clock();
-      printf("Execution time %.9lfs\n", (double) (end - start) / CLOCKS_PER_SEC);
+      printf("%.5lfs\n", (double) (end - start) / CLOCKS_PER_SEC);
       Pause();
     }
     else if (t == 6)

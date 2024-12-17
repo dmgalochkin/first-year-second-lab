@@ -39,7 +39,7 @@ void WriteVectorToFile(int n, int* vector, char* fileName)
   fprintf(file, "%d\n", n);
   for (i = 0; i < n; ++i)
   {
-    fprintf(file, "%d ", vector[i]);
+    fprintf(file, "%d\n", vector[i]);
   }
   fprintf(file, "\n");
   fclose(file);
